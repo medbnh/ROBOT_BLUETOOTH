@@ -1,0 +1,78 @@
+int MRF=3;//right motor forward
+int MRB=5;//right motor backward
+int MLF=6;//left motor forward
+int MLB=9; //left motor backward
+void setup(){
+pinMode(MRF,OUTPUT);
+pinMode(MRB,OUTPUT);
+pinMode(MLF,OUTPUT);
+pinMode(MLB,OUTPUT);  
+Serial.begin(9600);
+}
+void forward(){
+  digitalWrite(MRF,1);
+  digitalWrite(MLF,1);
+}
+void backward(){
+  digitalWrite(MRB,1);
+  digitalWrite(MLB,1);
+}
+void right(){
+  digitalWrite(MRF,0);
+  digitalWrite(MRB,0);
+  digitalWrite(MRB,1);
+  digitalWrite(MLF,1);
+}
+
+void left(){
+  digitalWrite(MRB,1);
+  digitalWrite(MRF,1);
+  digitalWrite(MLF,1);
+  digitalWrite(MLB,1);
+}
+void stope(){
+  digitalWrite(MRB,0);
+  digitalWrite(MRF,0);
+  digitalWrite(MLB,0);
+  digitalWrite(MLF,0);
+}
+void loop() {
+
+ if(Serial.available()>0){
+  delay(3);
+char  commande = Serial.read();
+  Serial.print("La commande ;    ");
+  Serial.println(commande);
+
+  switch (commande)  {
+       case 'F': Serial.println("FORWARD"); 
+                forward();
+                break;    
+       case 'B': Serial.println("BACKWARD"); 
+                 backward();
+                 break;
+       case 'R': Serial.println("RIGHT"); 
+                 right();
+                 break;
+       case 'L': Serial.println("LEFT");
+                left();
+                break;
+       case 'W': Serial.println("Automatic"); 
+                //forward();
+                break;
+       case 'U': Serial.println("Manual"); 
+                 //forward();
+                break;
+       case 'S': Serial.println("Stop"); 
+                      stope();
+                      break;
+
+
+  }
+  //commande ="";
+ }
+
+
+
+
+}
